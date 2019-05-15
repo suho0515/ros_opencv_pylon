@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+   <arg name="respawn" default="false" />
+   <arg name="debug" default="false" />
+   <arg name="node_name" default="ros_opencv_pylon" />
+   <arg name="config_file" default="$(find ros_opencv_pylon)/config/default.yaml" />
+
+   <arg unless="$(arg debug)" name="launch_prefix" value="" />
+   <arg     if="$(arg debug)" name="launch_prefix" value="gdb -ex run --args" />
+
+   <node pkg="pylon_camera" type="pylon_camera_node" name="$(arg node_name)" output="screen"
+         respawn="$(arg respawn)" launch-prefix="$(arg launch_prefix)">
+   <rosparam command="load" file="$(arg config_file)" />
+   </node>
+</launch> 
